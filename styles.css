@@ -1,0 +1,109 @@
+.ezr-main {
+  all: unset;
+  font: 20px Arial, sans-serif;
+  backdrop-filter: blur(15px);
+  color: white;
+  position: fixed;
+  top: 50px;
+  left: calc(100vw - 500px);
+  z-index: 999999;
+  border-radius: 5px;
+  border: 3px solid rgba(11, 77, 63, 0.7);
+  width: 450px;
+}
+
+.ezr-main.centered {
+  top: 200px;
+  left: calc(50vw - 225px);
+}
+
+.ezr-title-bar {
+  background: rgba(11, 77, 63, 0.7);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 4px 5px;
+  cursor: move;
+}
+
+.ezr-content {
+  background: rgba(14, 102, 85, 0.7);
+  padding: 5px;
+}
+
+.ezr-content .error {
+  color: #f4cdcb;
+  font-weight: bold;
+}
+
+.ezr-content div {
+  margin: 10px 0px;
+}
+
+.ezr-content .bold {
+  font-weight: bold;
+}
+
+.ezr-content hr {
+  margin: 15px 0px;
+  border: 1px solid lightblue;
+}
+
+.ezr-content input {
+  margin: 0px 5px;
+  padding:1px 2px;
+  font-weight:bold;
+  font-size:90%;
+  color: white;
+  border: none;
+  width: 75px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ezr-content .small {
+  font-size: 14px;
+}
+
+.ezr-content a {
+  text-decoration: none;
+  color: lightblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.ezr-content a.disabled {
+  color: lightgray;
+  pointer-events: none;
+}
+
+.ezr-content a:not(button, .disabled):hover {
+  text-decoration: underline;
+}
+
+.ezr-content .button {
+  display: inline-block;
+  background-color: black;
+  border-radius: 2px;
+  padding: 3px 5px;
+}
+
+.ezr-content .row {
+  display: flex;
+  gap: 10px;
+}
+
+.ezr-x-button {
+  background: rgba(217, 237, 83, 0.2);
+  font-size: 14px;
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-weight: bold;
+  padding: 2px 5px;
+  cursor: pointer;
+  transition: background 100ms;
+}
+
+.ezr-x-button:hover {
+  background: rgba(247, 237, 83, 0.3);
+}
