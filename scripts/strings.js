@@ -1,4 +1,4 @@
-let Strings = {
+export default {
   INVALID_BROWSER:
     "ERROR: You are using an invalid browser. Try the latest version of Chrome!",
   SPEEDRUN_COM:
@@ -37,5 +37,3 @@ let Strings = {
     "Looks like the video playing has changed.\
       You can press the button below to open a new instance of ezRetime.",
 };
-
-export default Strings;

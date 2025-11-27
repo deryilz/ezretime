@@ -4,21 +4,22 @@ import Split from "./split.js";
 import Strings from "./strings.js";
 import VideoCalculator from "./video-calculator.js";
 
+const TURBO_SPEEDUP = 5;
+
 export default class EzRetime {
   constructor() {
-    if (window.ezRetime) {
-      console.log("ezRetime is already active.");
-      return;
+    if (!window.ezRetime) {
+      window.ezRetime = true;
+    } else {
+      return console.log("ezRetime is already active.");
     }
-    window.ezRetime = true;
 
-    this.TURBO_SPEEDUP = 5;
     this.originalUrl = ParsedURL.fromCurrent();
     this.createPrototype();
 
     // for the extension, the window is closable
     this.popup = new DraggablePopup("ezRetime", true);
-    this.popup.closeListeners.push(() => window.ezRetime = false);
+    this.popup.closeListeners.push(this.turnOff.bind(this));
 
     this.window = this.popup.contentElement;
     this.checkBrowser();
@@ -197,7 +198,7 @@ export default class EzRetime {
     this.window
       .addElement("div", {
         className: "small",
-        innerHTML: "Extra time:",
+        innerHTML: "Extra seconds:",
       })
       .addElement("input", {
         value: "0",
@@ -228,7 +229,7 @@ export default class EzRetime {
   }
 
   toggleTurboMode() {
-    let isTurboMode = this.video.playbackRate === this.TURBO_SPEEDUP;
+    let isTurboMode = this.video.playbackRate === TURBO_SPEEDUP;
     this.setTurboMode(!isTurboMode);
 
     if (!isTurboMode && this.originalUrl.domainName === "TWITCH") {
@@ -238,11 +239,12 @@ export default class EzRetime {
   }
 
   setTurboMode(bool) {
-    this.video.playbackRate = bool ? this.TURBO_SPEEDUP : 1;
+    this.video.playbackRate = bool ? TURBO_SPEEDUP : 1;
   }
 
   listenForInput() {
-    window.addEventListener("keydown", this.onGlobalKey.bind(this));
+    this.listener = this.onGlobalKey.bind(this);
+    window.addEventListener("keydown", this.listener);
     this.$("input").addEventListener("keyup", this.onInputKey.bind(this));
   }
 
@@ -293,7 +295,7 @@ export default class EzRetime {
   }
 
   get extraTime() {
-    return Number(this.$("input").value) || 0;
+    return Math.max(0, Number(this.$("input").value) || 0);
   }
 
   setStartTime() {
@@ -410,7 +412,6 @@ export default class EzRetime {
     for (let i = 0; i < this.splits.length; i++) {
       let n = i === 0 ? "" : ` #${i + 1}`;
       let split = this.splits[i];
-      let duration = split.duration;
       let start = this.videoCalc.estimateFrame(split.start);
       let end = this.videoCalc.estimateFrame(split.end);
       details.push(`Start Frame${n}: ${start}, End Frame${n}: ${end}`);
@@ -496,6 +497,7 @@ export default class EzRetime {
           innerHTML: "Restart",
           onclick: () => {
             this.popup.remove();
+            this.turnOff();
             new EzRetime();
           },
         });
@@ -503,5 +505,10 @@ export default class EzRetime {
         changed = true;
       }
     }, 2000);
+  }
+
+  turnOff() {
+    window.ezRetime = false;
+    window.removeEventListener("keydown", this.listener);
   }
 }
