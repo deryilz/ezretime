@@ -105,6 +105,4 @@ export default class VideoCalculator {
   getRoundedTime() {
     return this.roundToFrame(this.videoElement.currentTime);
   }
-
-  onPushed() {}
 }
