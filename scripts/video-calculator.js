@@ -90,7 +90,7 @@ export default class VideoCalculator {
 
   // convert .666 to .667 and so on, since we only have 0.01 accuracy on the video
   roundToFrame(seconds) {
-    let frame = this.estimateFrame(seconds);
+    let frame = Math.floor(seconds * this.fps);
     return frame / this.fps;
   }
 
