@@ -299,12 +299,12 @@ export default class EzRetime {
   }
 
   setStartTime() {
-    this.currentSplit.start = this.videoCalc.getRoundedTime();
+    this.currentSplit.start = this.videoCalc.getFlooredTime();
     this.render();
   }
 
   setEndTime() {
-    this.currentSplit.end = this.videoCalc.getRoundedTime();
+    this.currentSplit.end = this.videoCalc.getFlooredTime();
     this.render();
   }
 

@@ -90,8 +90,15 @@ export default class VideoCalculator {
 
   // convert .666 to .667 and so on, since we only have 0.01 accuracy on the video
   roundToFrame(seconds) {
-    let frame = Math.floor(seconds * this.fps);
-    return frame / this.fps;
+    return = Math.round(seconds * this.fps) / this.fps;
+  }
+
+  floorToFrame(seconds) {
+    return Math.floor(seconds * this.fps) / this.fps;
+  }
+
+  getFlooredTime() {
+    return this.floorToFrame(this.videoElement.currentTime);
   }
 
   formatSecs(seconds) {
@@ -100,9 +107,5 @@ export default class VideoCalculator {
       (seconds < 10 ? ":0" : ":") +
       seconds.toFixed(3)
     );
-  }
-
-  getRoundedTime() {
-    return this.roundToFrame(this.videoElement.currentTime);
   }
 }
